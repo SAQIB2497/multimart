@@ -8,15 +8,23 @@ import { motion } from "framer-motion";
 import Services from "../services/Services";
 import ProductsList from "../UI/ProductsList";
 import products from "../assets/data/products";
+import CounterImg from "../assets/images/counter-timer-img.png";
+import Clock from "../UI/Clock";
 
 const Home = () => {
-  const [data, setData] = useState(products);
+  const [trandingProducts, setTrandingProducts] = useState([]);
+  const [bestSalesProducts, setBestSalesProductss] = useState([]);
   const year = new Date().getFullYear();
 
   useEffect(() => {
-    const filterProduct = () =>
+    const filteredTrandingProducts = () =>
       products.filter((item) => item.category === "chair");
-    setData(filterProduct);
+
+    const filteredBestSalesProducts = () =>
+      products.filter((item) => item.category === "sofa");
+
+    setTrandingProducts(filteredTrandingProducts);
+    setBestSalesProductss(filteredBestSalesProducts);
   }, []);
 
   return (
@@ -56,10 +64,42 @@ const Home = () => {
               <h2 className="section__title">Tranding Products</h2>
             </Col>
           </Row>
+          <ProductsList data={trandingProducts} />
         </Container>
       </section>
 
-      <ProductsList data= {data}/>
+      <section className="best__sales">
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center">
+              <h2 className="section__title">Best Sales</h2>
+            </Col>
+          </Row>
+          <ProductsList data={bestSalesProducts} />
+        </Container>
+      </section>
+
+      <section className="timer__count">
+        <Container>
+          <Row>
+            <Col lg="6" md="6">
+            <div className="clock_top-content">
+              <h2 className="text-white fs-6 mb-2">Limited Offer</h2>
+              <h3 className="text-white fs-5 mb-3">Quality ArmChair</h3>
+            </div>
+              <Clock />
+
+              <motion.button whileTap={{ scale: 1.2}} className="buy__btn store__btn">
+                <Link to="/shop">visit store</Link>
+              </motion.button>
+            </Col>
+
+            <Col lg="6" md="6" className="text-end">
+              <img src={CounterImg} alt="" />
+            </Col>
+          </Row>
+        </Container>
+      </section>
     </Halmet>
   );
 };

@@ -6,7 +6,7 @@ const ProductsList = ({ data }) => {
   return (
     <Container>
       <Row>
-        {data.map((item) => (
+        {data?.map((item) => (
           <ProductCard item={item} />
         ))}
       </Row>
